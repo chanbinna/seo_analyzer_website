@@ -88,7 +88,7 @@ export async function POST(request: Request) {
     try {
       const psiRes = await axios.get(psiApiUrl);
       loadingSpeedScore = Math.round((psiRes.data.lighthouseResult.categories.performance.score || 0) * 100);
-    } catch (e) {
+    } catch {
       // fallback to default if API fails
     }
 
@@ -124,7 +124,7 @@ export async function POST(request: Request) {
     // 이미지 분석
     const images = $('img')
     const totalImages = images.length
-    const imagesWithAlt = images.filter((_, el) => $(el).attr('alt')).length
+    const imagesWithAlt = images.filter((_, el) => !!$(el).attr('alt')).length
     const imageOptimizationScore = calculateImageOptimizationScore(totalImages, imagesWithAlt)
 
     // 키워드 분석

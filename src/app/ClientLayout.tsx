@@ -1,12 +1,20 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { LanguageProvider } from '../context/LanguageContext';
 import { LanguageToggle } from '../components/LanguageToggle';
 import { useLanguage } from '../context/LanguageContext';
+import Footer from '../components/Footer';
 
 function NavBar() {
   const { language } = useLanguage();
+  const pathname = usePathname();
+
+  const isActive = (path: string) => {
+    return pathname === path;
+  };
+
   return (
     <nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4">
@@ -20,19 +28,31 @@ function NavBar() {
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               <Link
                 href="/"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900"
+                className={`inline-flex items-center px-1 pt-1 text-sm font-medium ${
+                  isActive('/') 
+                    ? 'text-blue-600 border-b-2 border-blue-600' 
+                    : 'text-gray-500 hover:text-gray-900'
+                }`}
               >
                 {language === 'ko' ? '홈' : 'Home'}
               </Link>
               <Link
                 href="/about"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900"
+                className={`inline-flex items-center px-1 pt-1 text-sm font-medium ${
+                  isActive('/about') 
+                    ? 'text-blue-600 border-b-2 border-blue-600' 
+                    : 'text-gray-500 hover:text-gray-900'
+                }`}
               >
                 {language === 'ko' ? 'SEO란?' : 'About SEO'}
               </Link>
               <Link
                 href="/howitworks"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900"
+                className={`inline-flex items-center px-1 pt-1 text-sm font-medium ${
+                  isActive('/howitworks') 
+                    ? 'text-blue-600 border-b-2 border-blue-600' 
+                    : 'text-gray-500 hover:text-gray-900'
+                }`}
               >
                 {language === 'ko' ? '작동원리' : 'How It Works'}
               </Link>
@@ -52,6 +72,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <main className="min-h-screen">
         {children}
       </main>
+      <Footer />
     </LanguageProvider>
   );
 } 

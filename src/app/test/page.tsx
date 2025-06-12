@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { Suspense } from 'react'
 import TestClient from './TestClient'
 
 export const metadata: Metadata = {
@@ -13,5 +14,9 @@ export const metadata: Metadata = {
 }
 
 export default function TestPage() {
-  return <TestClient />
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <TestClient />
+    </Suspense>
+  )
 } 

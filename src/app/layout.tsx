@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { LanguageProvider } from '../context/LanguageContext';
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
-  title: "SEO 점수 분석기",
-  description: "웹사이트의 SEO 점수를 분석하고 개선점을 제시하는 도구입니다.",
-  keywords: "SEO, 분석, 점수, 웹사이트, 최적화",
+  title: "SEO Analyzer",
+  description: "Analyze your website's SEO performance",
 };
 
 export default function RootLayout({
@@ -17,9 +14,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ko">
+    <html lang="en">
       <body className="bg-white">
-        <ClientLayout>{children}</ClientLayout>
+        <LanguageProvider>
+          <ClientLayout>{children}</ClientLayout>
+        </LanguageProvider>
       </body>
     </html>
   );

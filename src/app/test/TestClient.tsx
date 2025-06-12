@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { motion, useSpring, useTransform, useMotionValueEvent } from 'framer-motion'
+import { motion, useSpring, useTransform } from 'framer-motion'
 import { useLanguage } from '../../context/LanguageContext'
 
 const ReactConfetti = dynamic(() => import('react-confetti'), {
@@ -270,8 +270,6 @@ export default function TestClient() {
   const [data, setData] = useState<AnalysisData | null>(null)
   const [showConfetti, setShowConfetti] = useState(false)
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
-  const [count, setCount] = useState(0)
-  const [roundedCountValue, setRoundedCountValue] = useState(0)
   const { language } = useLanguage() as { language: Language }
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
 
@@ -306,10 +304,6 @@ export default function TestClient() {
   }, [data, spring])
 
   const roundedCount = useTransform(spring, (latest) => Math.round(latest))
-
-  useMotionValueEvent(roundedCount, 'change', (latest) => {
-    setRoundedCountValue(latest)
-  })
 
   useEffect(() => {
     const handleResize = () => {
@@ -403,8 +397,8 @@ export default function TestClient() {
                 transition={{ duration: 0.5 }}
               >
                 <motion.div className={`text-4xl font-bold ${
-                  (roundedCountValue >= 90) ? 'text-green-600' :
-                  (roundedCountValue >= 70) ? 'text-yellow-600' :
+                  (roundedCount.get() >= 90) ? 'text-green-600' :
+                  (roundedCount.get() >= 70) ? 'text-yellow-600' :
                   'text-red-600'
                 }`}>{roundedCount}</motion.div>
               </motion.div>
@@ -414,8 +408,8 @@ export default function TestClient() {
                   animate={{ width: `${data.totalScore}%` }}
                   transition={{ duration: 1, delay: 0.5 }}
                   className={`${
-                    (roundedCountValue >= 90) ? 'bg-green-600' :
-                    (roundedCountValue >= 70) ? 'bg-yellow-500' :
+                    (roundedCount.get() >= 90) ? 'bg-green-600' :
+                    (roundedCount.get() >= 70) ? 'bg-yellow-500' :
                     'bg-red-600'
                   } h-4 rounded-full`}
                 />
@@ -489,8 +483,7 @@ export default function TestClient() {
             <div className="space-y-8">
               {sortedRecs.map((rec, index) => {
                 let color = 'text-yellow-600';
-                let badge = '중간';
-                if (rec.score < 70) { color = 'text-red-600'; badge = '높음'; }
+                if (rec.score < 70) { color = 'text-red-600'; }
                 return (
                   <motion.div
                     key={index}

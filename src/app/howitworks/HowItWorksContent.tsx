@@ -98,11 +98,11 @@ export function HowItWorksContent() {
             <p className="text-gray-600">
               {language === 'ko' ? (
                 <>
-                  HTML의 <span className="font-medium">&lt;title&gt;</span>과 <span className="font-medium">&lt;meta name='description'&gt;</span> 태그를 파싱하여, 존재 여부와 길이, 내용의 적절성을 평가합니다.
+                  HTML의 <span className="font-medium">&lt;title&gt;</span>과 <span className="font-medium">&lt;meta name=&apos;description&apos;&gt;</span> 태그를 파싱하여, 존재 여부와 길이, 내용의 적절성을 평가합니다.
                 </>
               ) : (
                 <>
-                  The <span className="font-medium">&lt;title&gt;</span> and <span className="font-medium">&lt;meta name='description'&gt;</span> tags in the HTML are parsed to evaluate their existence, length, and appropriateness of content.
+                  The <span className="font-medium">&lt;title&gt;</span> and <span className="font-medium">&lt;meta name=&apos;description&apos;&gt;</span> tags in the HTML are parsed to evaluate their existence, length, and appropriateness of content.
                 </>
               )}
             </p>
@@ -156,6 +156,16 @@ export function HowItWorksContent() {
             </p>
           </section>
         </div>
+        <p className="text-gray-600 dark:text-gray-300">
+          {language === 'ko' 
+            ? '웹사이트의 SEO 성능을 분석하고 개선점을 찾아보세요. URL을 입력하면 즉시 분석이 시작됩니다.'
+            : 'Analyze your website&#39;s SEO performance and find areas for improvement. Enter a URL to start the analysis.'}
+        </p>
+        <p className="text-gray-600 dark:text-gray-300">
+          {language === 'ko'
+            ? '키워드 분석, 메타 태그 검사, 페이지 속도 측정 등 다양한 SEO 요소를 확인할 수 있습니다.'
+            : 'Check various SEO elements including keyword analysis, meta tag inspection, and page speed measurement.'}
+        </p>
       </div>
     </main>
   );
